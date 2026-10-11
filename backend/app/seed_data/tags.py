@@ -1,0 +1,25 @@
+"""Reusable technique tags (name -> slug is generated)."""
+
+TAGS: list[str] = [
+    "Array",
+    "String",
+    "Math",
+    "HashMap",
+    "Two Pointer",
+    "Sliding Window",
+    "Binary Search",
+    "Sorting",
+    "Linked List",
+    "Stack",
+    "Queue",
+    "Tree",
+    "Graph",
+    "DFS",
+    "BFS",
+    "Greedy",
+    "DP",
+    "Recursion",
+    "Matrix",
+    "Design",
+    "Implementation",
+]

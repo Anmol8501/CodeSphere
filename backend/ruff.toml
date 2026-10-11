@@ -1,0 +1,18 @@
+# Backend lint configuration:  ruff check .
+line-length = 120
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = [
+    "E501",   # long lines: no auto-formatter is used; readability is reviewed instead
+    "UP046",  # `class Page(BaseModel, Generic[T])` is pydantic's documented generic pattern
+]
+
+[lint.flake8-bugbear]
+# FastAPI declares dependencies and parameters as call defaults by design.
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Path", "fastapi.Body", "fastapi.Header"]
+
+[lint.per-file-ignores]
+# Shared pytest fixtures are imported into test modules and used by name.
+"tests/**" = ["F811"]

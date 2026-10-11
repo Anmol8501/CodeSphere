@@ -1,0 +1,23 @@
+# Web framework & server
+fastapi==0.142.2
+uvicorn[standard]==0.54.0
+
+# Database
+SQLAlchemy==2.1.1
+alembic==1.20.0
+pg8000==1.31.5
+
+# Validation & settings
+pydantic==2.13.5
+pydantic-settings==2.15.0
+email-validator==2.3.0
+
+# Auth
+PyJWT==2.15.1
+bcrypt==5.0.0
+
+# Judge0 client (code execution service)
+httpx==0.28.1
+
+# IANA timezone data (zoneinfo needs it on Windows)
+tzdata==2026.4

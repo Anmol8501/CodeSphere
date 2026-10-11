@@ -1,0 +1,41 @@
+# --- Environment / secrets -------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+*.db
+*.sqlite3
+
+# --- Node / frontend ---------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+*.local
+*.tsbuildinfo
+
+# --- Logs ----------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+
+# --- Editors / OS ----------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Local test credentials (never commit) ----------------------------------
+example.txt
+
+# --- Judge0 secrets (copy judge0.conf.example) ----------------------------
+infra/judge0/judge0.conf

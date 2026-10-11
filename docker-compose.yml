@@ -1,0 +1,24 @@
+# Optional: run PostgreSQL in Docker for local development.
+#   docker compose up -d
+# Values come from a root-level .env file (see README) with safe defaults for local use.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: codearena-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-codearena}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in a root .env file}
+      POSTGRES_DB: ${POSTGRES_DB:-codearena}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - codearena_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-codearena} -d ${POSTGRES_DB:-codearena}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  codearena_pgdata:

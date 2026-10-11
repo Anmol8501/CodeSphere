@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest==9.1.1
+
+# Lint and type check:  ruff check .   /   mypy app
+ruff==0.14.0
+mypy==1.18.2

@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/*
+ * CodeArena design system: dark developer / control-center theme.
+ *
+ *   Background       #050805  night  (= ink-50)
+ *   Secondary        #0B100B  surface (sidebar, navbar, inputs on cards)
+ *   Card             #0D130D  card
+ *   Primary          #39FF14  brand-500
+ *   Secondary green  #20C957  accent
+ *   Muted green      #168A35  moss
+ *   Text primary     #F2F5F2  ink-950
+ *   Text secondary   #A5ADA5  ink-500
+ *   Text muted       #697369  ink-400
+ *   Warning #F5C542 · Error #FF4D4D · Info #4DA6FF
+ *
+ * The ink scale runs dark (50) → light (950): `bg-ink-50` is a background and
+ * `text-ink-950` is a heading. Green is reserved for active states, actions,
+ * progress, status and important values. It is not a general text color.
+ */
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Surfaces */
+  --color-night: #050805;
+  --color-surface: #0b100b;
+  --color-card: #0d130d;
+
+  /* Greens */
+  --color-accent: #20c957;
+  --color-moss: #168a35;
+
+  /* Status */
+  --color-warning: #f5c542;
+  --color-danger: #ff4d4d;
+  --color-info: #4da6ff;
+
+  /* Brand: neon green. 50–200 are dark tints, 300+ are bright. */
+  --color-brand-50: #0b1a08;
+  --color-brand-100: #10260b;
+  --color-brand-200: #1b4313;
+  --color-brand-300: #8dff74;
+  --color-brand-400: #62ff43;
+  --color-brand-500: #39ff14;
+  --color-brand-600: #39ff14;
+  --color-brand-700: #6bff4f;
+  --color-brand-800: #a8ff94;
+  --color-brand-900: #c6ffb8;
+  --color-brand-950: #e2ffd9;
+
+  /* Ink: neutral text/border scale with a faint green tint */
+  --color-ink-50: #050805;
+  --color-ink-100: #111811;
+  --color-ink-200: #1b261b;
+  --color-ink-300: #2a382a;
+  --color-ink-400: #697369;
+  --color-ink-500: #a5ada5;
+  --color-ink-600: #b9c0b9;
+  --color-ink-700: #ccd2cc;
+  --color-ink-800: #dde2dd;
+  --color-ink-900: #e9ede9;
+  --color-ink-950: #f2f5f2;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px -4px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.5), 0 18px 40px -12px rgb(0 0 0 / 0.8);
+  --shadow-glow: 0 0 24px -6px rgb(57 255 20 / 0.55);
+  --shadow-glow-sm: 0 0 12px -4px rgb(57 255 20 / 0.5);
+
+  --animate-fade-in: fade-in 0.35s ease-out both;
+  --animate-slide-in: slide-in 0.25s ease-out both;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-in {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 0.9; }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-night font-sans text-ink-900;
+  }
+  ::selection {
+    @apply bg-brand-500 text-night;
+  }
+  /* Visible keyboard focus everywhere (mouse clicks don't show it). */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+  /* Keep browser autofill from painting inputs light yellow/blue. */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-ink-950);
+    -webkit-box-shadow: 0 0 0 1000px var(--color-night) inset;
+    caret-color: var(--color-ink-950);
+    transition: background-color 9999s ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Subtle green dotted grid used behind hero/brand sections */
+  .bg-dot-grid {
+    background-image: radial-gradient(rgb(57 255 20 / 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .bg-dot-grid-light {
+    background-image: radial-gradient(rgb(57 255 20 / 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  /* Faint technical line grid used behind the authenticated app */
+  .bg-line-grid {
+    background-image:
+      linear-gradient(rgb(57 255 20 / 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(57 255 20 / 0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}

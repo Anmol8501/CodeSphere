@@ -1,0 +1,54 @@
+# Self-hosted Judge0 CE 1.13.1 for CodeArena (code execution sandbox).
+#
+# Student code runs ONLY here, inside Judge0's isolate sandbox, never in the
+# CodeArena backend. The API is bound to 127.0.0.1 so it is reachable by the
+# backend on this machine but not from the network.
+#
+#   cp judge0.conf.example judge0.conf   # then set the passwords / token
+#   docker compose up -d
+#   curl -s http://127.0.0.1:2358/system_info
+#
+# See README "Code execution (Judge0)" for host requirements (cgroup v1).
+x-logging: &default-logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100M
+
+services:
+  server:
+    image: judge0/judge0:1.13.1
+    volumes:
+      - ./judge0.conf:/judge0.conf:ro
+    ports:
+      - "127.0.0.1:2358:2358"
+    privileged: true  # required by Judge0's isolate sandbox
+    <<: *default-logging
+    restart: unless-stopped
+
+  workers:
+    image: judge0/judge0:1.13.1
+    command: ["./scripts/workers"]
+    volumes:
+      - ./judge0.conf:/judge0.conf:ro
+    privileged: true
+    <<: *default-logging
+    restart: unless-stopped
+
+  db:
+    image: postgres:16.2
+    env_file: judge0.conf
+    volumes:
+      - judge0_data:/var/lib/postgresql/data/
+    <<: *default-logging
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2.4
+    command: ["bash", "-c", 'docker-entrypoint.sh --appendonly no --requirepass "$$REDIS_PASSWORD"']
+    env_file: judge0.conf
+    <<: *default-logging
+    restart: unless-stopped
+
+volumes:
+  judge0_data:
